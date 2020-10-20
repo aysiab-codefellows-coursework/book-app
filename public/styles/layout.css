@@ -1,3 +1,11 @@
+header {
+      background: #8C674D;
+      margin: 0;
+      padding: 5%;
+      float: left;
+      overflow: hidden;
+}
+
 fieldset {
   background-color: #D1A577;
   margin: 10%;

@@ -1,9 +1,11 @@
 form {
-  margin: 0 20% 0;
+  margin: 5% 20% 0;
   padding: 0 10% 0;
+  display: flex;
+  flex-direction: column;
 }
 
-fieldset {
+form > fieldset {
   margin: 1%;
   padding: 5%;
   text-align: justify;

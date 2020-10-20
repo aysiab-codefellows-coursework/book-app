@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap');
 
 h1 {
-    font-family: 'Cutive Mono';
-    font-size: 50px;
-    color: #311F1E;
     background: #8C674D;
+    font-family: 'Cutive Mono';
+    font-size: 40px;
+    color: #311F1E;
 }
 
 body {
