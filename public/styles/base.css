@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap');
+
+h1 {
+    background: #8C674D;
+    font-family: 'Cutive Mono';
+    font-size: 40px;
+    color: #311F1E;
+}
+
+body {
+    background-color: #817453;
+    color: #311F1E;
+}
+
