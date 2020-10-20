@@ -40,7 +40,9 @@ function createSearch(req, res) {
     .then(data => {
       console.log('google books data', data.body);
       let results = JSON.parse(data.text)
-      res.json(results); // posts results as giant obj
+      results = results.items;
+      let bookResults = results.map(book => new Book(book));
+      res.json(bookResults); // posts results as giant obj
     })
     .catch(err => console.log(err));
 }
@@ -50,9 +52,20 @@ app.listen(PORT, () => {
   console.log(`Server listening at: ${PORT}`);
 })
 
-// constructor
+// Book object constructor
+function Book(data) {
+  this.title = data.volumeInfo.title;
+  this.author = data.volumeInfo.authors;
+  this.publishDate = data.volumeInfo.publishedDate;
+  this.desc = data.volumeInfo.description;
+  this.pages = data.volumeInfo.pageCount;
+  this.rating = data.volumeInfo.averageRating;
+  this.img = data.volumeInfo.imageLinks.thumbnail || `https://i.imgur.com/J5LVHEL.jpg`;
+}
 
-function Book(title, author) {
-  volumeInfo.title = title;
-  volumeInfo.author = author;
-}; 
+app.use(errorHandler);
+
+function errorHandler(error, request, response, next) {
+  console.log(error);
+  response.status(500).send('Ooops. That is spooky! Something went wrong ):')
+}
