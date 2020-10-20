@@ -34,8 +34,8 @@ Number and name of feature: FEATURE 02: Submit a form, return a rendered list
 
 Estimate of time needed to complete: 2 hrs
 
-Start time: 3:00
+Start time: 3:00 PM
 
-Finish time: _____
+Finish time: 10:00 PM
 
-Actual time needed to complete: _____
+Actual time needed to complete: 5 hrs

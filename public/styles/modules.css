@@ -1,0 +1,25 @@
+form {
+  margin: 5% 20% 0;
+  padding: 0 10% 0;
+  display: flex;
+  flex-direction: column;
+}
+
+form > fieldset {
+  margin: 1%;
+  padding: 5%;
+  text-align: justify;
+  background-color: #DACDAD;
+}
+
+input[type=text]{
+  width: 100%;
+}
+
+button {
+  min-width: 40vw;
+  padding: 5% 3% 5%;
+  color: #DACDAD;
+  background-color: #311F1E;;
+}
+
