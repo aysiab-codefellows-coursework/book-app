@@ -29,16 +29,16 @@ app.get('/hello', (req, res) => {
 app.get('/search', (req, res) => res.render('pages/searches/searches.ejs'));
 
 // loads search results
-app.post('/searche-results', createSearch);
+app.post('/searches', createSearch);
 
 function createSearch(req, res) {
   let query = req.body.search[0];
   let url;
-  if(req.body.search[1] === 'title') { url = `https://www.googleapis.com/books/v1/volumes?q=${query}+intitle:keyes&key=${GOOGLE_API}`; }
-  if(req.body.search[1] === 'author') { url = `https://www.googleapis.com/books/v1/volumes?q=${query}+inauthor:keyes&key=${GOOGLE_API}`;}
+  if (req.body.search[1] === 'title') { url = `https://www.googleapis.com/books/v1/volumes?q=+intitle:${query}`; }
+  if (req.body.search[1] === 'author') { url = `https://www.googleapis.com/books/v1/volumes?q=+inauthor:${query}`; }
   superagent.get(url)
     .then(data => {
-      console.log('google books data', data);
+      console.log('google books data', data.body);
       let results = JSON.parse(data.text)
       res.json(results); // posts results as giant obj
     })
@@ -49,3 +49,10 @@ function createSearch(req, res) {
 app.listen(PORT, () => {
   console.log(`Server listening at: ${PORT}`);
 })
+
+// constructor
+
+function Book(title, author) {
+  volumeInfo.title = title;
+  volumeInfo.author = author;
+};
