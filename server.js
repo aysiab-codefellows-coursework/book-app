@@ -7,24 +7,42 @@ const superagent = require('superagent');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const GOOGLE_API = process.env.GOOGLE_API_KEY;
+
 app.set('view engine', 'ejs');
 app.use(express.static('./public'));
 app.use(express.urlencoded({ extended: true }));
 
+
+// loads home page using index.ejs
 app.get('/', (req, res) => {
   res.render('pages/index');
 });
 
 
-// TESTING ONLY: used for testing only as per feature task recommendation 
+// TESTING ONLY: used for testing only as per feature task recommendation
 app.get('/hello', (req, res) => {
   res.render('pages/index');
 });
 
-app.post('/searches', createSearch);
+// loads search page
+app.get('/search', (req, res) => res.render('pages/searches/searches.ejs'));
+
+// loads search results
+app.post('/searche-results', createSearch);
 
 function createSearch(req, res) {
-  let url = ``;
+  let query = req.body.search[0];
+  let url;
+  if(req.body.search[1] === 'title') { url = `https://www.googleapis.com/books/v1/volumes?q=${query}+intitle:keyes&key=${GOOGLE_API}`; }
+  if(req.body.search[1] === 'author') { url = `https://www.googleapis.com/books/v1/volumes?q=${query}+inauthor:keyes&key=${GOOGLE_API}`;}
+  superagent.get(url)
+    .then(data => {
+      console.log('google books data', data);
+      let results = JSON.parse(data.text)
+      res.json(results); // posts results as giant obj
+    })
+    .catch(err => console.log(err));
 }
 
 
