@@ -62,13 +62,20 @@ function createSearch(req, res) {
   if (req.body.search[1] === 'author') { url = `https://www.googleapis.com/books/v1/volumes?q=+inauthor:${query}`; }
   superagent.get(url)
     .then(data => {
-      console.log('google books data', data.body);
+     // console.log('google books data', data.body);
       let results = JSON.parse(data.text)
       results = results.items;
       let bookResults = results.map(book => new Book(book));
-      res.json(bookResults); // posts results as giant obj
+      //res.json(bookResults);
+      res.render('pages/searches/show',{search_results: bookResults}); 
     })
     .catch(err => console.log(err));
+}
+
+app.get('/add', addToFave)
+
+function addToFave(req,res) {
+  console.log(req.body);
 }
 
 
