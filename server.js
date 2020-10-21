@@ -57,10 +57,11 @@ function Book(data) {
   this.title = data.volumeInfo.title;
   this.author = data.volumeInfo.authors;
   this.publishDate = data.volumeInfo.publishedDate;
+  this.isbn = data.volumeInfo.industryIdentifiers[0].identifier;
   this.desc = data.volumeInfo.description;
   this.pages = data.volumeInfo.pageCount;
   this.rating = data.volumeInfo.averageRating;
-  this.img = data.volumeInfo.imageLinks.thumbnail || `https://i.imgur.com/J5LVHEL.jpg`;
+  this.img = data.volumeInfo.imageLinks ? data.volumeInfo.imageLinks.thumbnail : `https://i.imgur.com/J5LVHEL.jpg`;
 }
 
 app.use(errorHandler);
