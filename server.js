@@ -1,14 +1,21 @@
 'use strict';
 
+// 3rd party dependencies
 require('dotenv').config();
 const express = require('express');
 const superagent = require('superagent');
+const pg = require('pg');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const GOOGLE_API = process.env.GOOGLE_API_KEY;
+const client = new pg.Client(process.env.DATABASE_URL)
 
+// configuring database
+client.connect();
+client.on('error', err => console.log(err));
+
+// front end configs
 app.set('view engine', 'ejs');
 app.use(express.static('./public'));
 app.use(express.urlencoded({ extended: true }));
@@ -19,11 +26,18 @@ app.get('/', (req, res) => {
   res.render('pages/index');
 });
 
+app.get('/hello', getAllBooks);
 
-// TESTING ONLY: used for testing only as per feature task recommendation
-app.get('/hello', (req, res) => {
-  res.render('pages/index');
-});
+// function that retrieves books from database
+function getAllBooks(req, res) {
+  let query = `SELECT * FROM books;`;
+  return client.query(query)
+    .then(data => {
+      res.render('pages/index.ejs',{ books: data.rows })
+    })
+    .catch(err => console.log(err));
+}
+
 
 // loads search page
 app.get('/search', (req, res) => res.render('pages/searches/searches.ejs'));
