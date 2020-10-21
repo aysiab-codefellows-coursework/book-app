@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+</head>
+<body>
+    <section class="books">
+        <p>Total Books: <%= search_results.length %></p>
+        <% search_results.forEach(book => { %>
+          <img src="<%= book.img %>">
+          <h4> <%=book.title%></h4>
+          <p><%= book.author%></p>
+          <a href="/books/add">
+            <button id="<%= book.title %>">Add to Favorites</button>
+          </a>
+        <% }) %>
+      </section>
+</body>
+</html>
