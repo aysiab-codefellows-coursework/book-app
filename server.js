@@ -22,11 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 // loads home page using index.ejs
-app.get('/', (req, res) => {
-  res.render('pages/index');
-});
-
-app.get('/hello', getAllBooks);
+app.get('/', getAllBooks);
 
 // function that retrieves books from database
 function getAllBooks(req, res) {
@@ -36,6 +32,20 @@ function getAllBooks(req, res) {
       res.render('pages/index.ejs',{ books: data.rows })
     })
     .catch(err => console.log(err));
+}
+
+app.get('/books/:book_id', getBookDetails);
+
+function getBookDetails(req, res) {
+  let query = 'SELECT * FROM books WHERE id=$1';
+  let value = [req.params.book_id];
+  value = [Number(value[0])];
+
+  return client.query(query, value)
+    .then(details => {
+      res.render('pages/books/detail', { book: details.rows[0]})
+    })
+    .catch(err => console.error(err));
 }
 
 

@@ -12,6 +12,9 @@
         <img src="<%= book.image_url %>">
         <h4> <%=book.title%></h4>
         <p><%= book.author%></p>
+        <a href="/books/<%= book.id %>">
+          <button id="<%= book.title %>">View Details</button>
+        </a>
       <% }) %>
     </section>
     <script src="../../public/js/app.js"></script>
