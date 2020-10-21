@@ -18,9 +18,12 @@
   },
   "homepage": "https://github.com/aysiae/book-app#readme",
   "dependencies": {
+    "axios": "^0.20.0",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
+    "pg": "^8.4.1",
     "superagent": "^6.1.0"
   }
 }

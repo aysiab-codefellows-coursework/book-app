@@ -8,8 +8,24 @@
 <body>
   <header>
     <h1>Search for Books:</h1>
+<<<<<<< HEAD
   </header>
 
 </body>
 
+=======
+    <section class="books">
+      <p>Total Books: <%= books.length %></p>
+      <% books.forEach(book => { %>
+        <img src="<%= book.image_url %>">
+        <h4> <%=book.title%></h4>
+        <p><%= book.author%></p>
+        <a href="/books/<%= book.id %>">
+          <button id="<%= book.title %>">View Details</button>
+        </a>
+      <% }) %>
+    </section>
+    <script src="../../public/js/app.js"></script>
+  </body>
+>>>>>>> 1714166e40cd0d81e8d81f29195753a39bc54f5f
 </html>
