@@ -34,18 +34,23 @@ function getAllBooks(req, res) {
     .catch(err => console.log(err));
 }
 
-app.get('/books/:book_id', getBookDetails);
+app.get('/books/:id', getBookDetails);
 
 function getBookDetails(req, res) {
-  let query = 'SELECT * FROM books WHERE id=$1';
-  let value = [req.params.book_id];
-  value = [Number(value[0])];
+  console.log('reached!')
+  try {
+    let query = 'SELECT * FROM books WHERE id=$1';
+    let value = [req.params.id];
+    value = [Number(value[0])];
 
-  return client.query(query, value)
-    .then(details => {
-      res.render('pages/books/detail', { book: details.rows[0]})
-    })
-    .catch(err => console.error(err));
+    return client.query(query, value)
+      .then(details => {
+        res.render('pages/books/detail', { book: details.rows[0]})
+      })
+      .catch(err => console.error(err));
+  } catch(exception) {
+    console.log(exception);
+  }
 }
 
 
@@ -62,11 +67,9 @@ function createSearch(req, res) {
   if (req.body.search[1] === 'author') { url = `https://www.googleapis.com/books/v1/volumes?q=+inauthor:${query}`; }
   superagent.get(url)
     .then(data => {
-      // console.log('google books data', data.body);
       let results = JSON.parse(data.text)
       results = results.items;
       let bookResults = results.map(book => new Book(book));
-      //res.json(bookResults);
       res.render('pages/searches/show',{search_results: bookResults});
     })
     .catch(err => console.log(err));
@@ -75,14 +78,44 @@ function createSearch(req, res) {
 app.post('/books', addToFave);
 
 function addToFave(req,res) {
-  console.log(req.body);
   const {title, author, isbn, image, description } = req.body;
-  let insertBookSQL = `INSERT INTO books (title, author, isbn, image_url, description) VALUES($1, $2, $3, $4, $5);`;
+  let insertBookSQL = `INSERT INTO books (title, author, isbn, image_url, description) VALUES($1, $2, $3, $4, $5) RETURNING id;`;
   client.query(insertBookSQL, [title, author, isbn, image, description])
-    .then( () => {
-      res.redirect('/')
+    .then( data => {
+      console.log("fave", data.rows[0]);
+      res.redirect(`/books/${data.rows[0].id}`);
     })
 }
+
+app.post('/edit', getForm);
+
+function getForm(req,res) {
+  let query = 'SELECT * FROM books WHERE id=$1';
+  let { id } = req.body
+  id = Number(id);
+  client.query(query, [id])
+    .then(details => {
+      res.render('pages/books/edit.ejs', {book: details.rows[0]});
+    })
+}
+
+app.post('/books/add',editDetails);
+
+function editDetails(req,res) {
+  const {title, author, image, description, isbn, id} = req.body;
+  let updateSQL = 'UPDATE books SET title=$1, author=$2, image_url=$3, description=$4, isbn=$5 WHERE id=$6 RETURNING id;';
+  client.query(updateSQL, [title, author, image, description, isbn, id])
+    .then(data => {
+      console.log("edit", data.rows[0]);
+      res.redirect(`/books/${data.rows[0].id}`);
+    });
+}
+
+
+function removeFromFave(req,res) {
+  console.log()
+}
+
 
 
 app.listen(PORT, () => {
