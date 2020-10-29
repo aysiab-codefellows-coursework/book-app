@@ -62,20 +62,26 @@ function createSearch(req, res) {
   if (req.body.search[1] === 'author') { url = `https://www.googleapis.com/books/v1/volumes?q=+inauthor:${query}`; }
   superagent.get(url)
     .then(data => {
-     // console.log('google books data', data.body);
+      // console.log('google books data', data.body);
       let results = JSON.parse(data.text)
       results = results.items;
       let bookResults = results.map(book => new Book(book));
       //res.json(bookResults);
-      res.render('pages/searches/show',{search_results: bookResults}); 
+      res.render('pages/searches/show',{search_results: bookResults});
     })
     .catch(err => console.log(err));
 }
 
-app.get('/add', addToFave)
+app.post('/books', addToFave);
 
 function addToFave(req,res) {
   console.log(req.body);
+  const {title, author, isbn, image, description } = req.body;
+  let insertBookSQL = `INSERT INTO books (title, author, isbn, image_url, description) VALUES($1, $2, $3, $4, $5);`;
+  client.query(insertBookSQL, [title, author, isbn, image, description])
+    .then( () => {
+      res.redirect('/')
+    })
 }
 
 
