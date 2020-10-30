@@ -6,6 +6,15 @@
     <title>Document</title>
 </head>
 <body>
+    <header>
+        <h1>Best Books!</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/search">Search</a></li>
+            </ul>
+        </nav>
+    </header>
     <form action="/books/add" method="post" >
         <label>Title:</label>
         <input type="text" name="title" value="<%= book.title %>">
