@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <h1>Best Books!</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/search">Search</a></li>
+            </ul>
+        </nav>
+    </header>
+    <form action="/books/add" method="post" >
+        <label>Title:</label>
+        <input type="text" name="title" value="<%= book.title %>">
+        <label>Author:</label>
+        <input type="text" name="author" value="<%= book.author %>"> <br>
+        <label>Image URL:</label>
+        <input type="text" name="image" value="<%= book.image_url %>"><br>
+        <label>Description:</label>
+        <textarea name="description" rows="10" col="50" value="<%= book.description %>"></textarea> <br>
+        <input type="hidden" name="isbn" value="<%= book.isbn %>">
+        <input type="hidden" name="id" value="<%= book.id %>">
+        <button type="submit">Accept Changes</button>
+    </form>
+</body>
+</html>

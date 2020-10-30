@@ -2,33 +2,41 @@
 <html>
 
 <head>
-  <%- include('../layout/head'); %>
+  <title>Book App</title>
+  <link href="./styles/style.css" rel="stylesheet">
 </head>
 
 <body>
   <header>
-    <h1>Search for Books:</h1>
-<<<<<<< HEAD
-<<<<<<< HEAD
+    <h1>Best Books!</h1>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/search">Search</a></li>
+      </ul>
+    </nav>
   </header>
+  <h1>Search for Books:</h1>
+  <<<<<<< HEAD <<<<<<< HEAD </header>
 
 </body>
 
 =======
-    <section class="books">
-      <p>Total Books: <%= books.length %></p>
-      <% books.forEach(book => { %>
-        <img src="<%= book.image_url %>">
-        <h4> <%=book.title%></h4>
-        <p><%= book.author%></p>
-        <a href="/books/<%= book.id %>">
-          <button id="<%= book.title %>">View Details</button>
-        </a>
-      <% }) %>
-    </section>
-    <script src="../../public/js/app.js"></script>
+<section class="books">
+  <p>Total Books: <%= books.length %></p>
+  <% books.forEach(book => { %>
+  <img src="<%= book.image_url %>">
+  <h4> <%=book.title%></h4>
+  <p><%= book.author%></p>
+  <a href="/books/<%= book.id %>">
+    <button id="<%= book.title %>">View Details</button>
+  </a>
+  <% }) %>
+</section>
+<script src="../../public/js/app.js"></script>
 =======
 >>>>>>> f64428f64a1a9d6b925b72914ae4c5558f4bd1b6
-  </body>
+</body>
 >>>>>>> 1714166e40cd0d81e8d81f29195753a39bc54f5f
+
 </html>
