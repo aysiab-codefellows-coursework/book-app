@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+</head>
+<body>
+  <header>
+    <h1>Best Books!</h1>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/search">Search</a></li>
+        </ul>
+    </nav>
+</header>
+    <section class="books">
+        <p>Total Books: <%= search_results.length %></p>
+        <% search_results.forEach(book => { %>
+          <img src="<%= book.img %>">
+          <h4> <%=book.title%></h4>
+          <p><%= book.author%></p>
+            <form action="/books" method="post">
+              <input type="hidden" name="title" value="<%= book.title %>">
+              <input type="hidden" name="author" value="<%= book.author %>">
+              <input type="hidden" name="isbn" value="<%= book.isbn %>">
+              <input type="hidden" name="image" value="<%= book.img %>">
+              <input type="hidden" name="description" value="<%= book.description %>">
+              <button id="<%= book.title %>" type="submit">Add to Favorites</button>
+            </form>
+        <% }) %>
+      </section>
+</body>
+</html>
